@@ -17,12 +17,18 @@ class TSP(Problem):
 
     def cost(self, state):
         c = 0
-        for i in range(len(state)):
-          c += self.dists[i - 1][i]
+        for i in range(len(self.cities)):
+            c += self.dists[i][(i + 1) % len(self.cities)]
         return c
+      
+    def cost(self, state):
+      c = 0
+      for i in range(len(self.cities)):
+          c += self.dists[self.cities.index(state[i])][self.cities.index(state[(i + 1) % len(self.cities)])]
+      return c
 
     def neighbor(self, state):
-        a, b = random.sample(range(self.num_cities), 2)
+        [a, b] = random.sample(range(len(self.cities)), 2)
         state[a], state[b] = state[b], state[a]
         return state
     

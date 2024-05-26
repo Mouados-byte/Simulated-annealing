@@ -1,12 +1,12 @@
 class Problem:
   def initial(self):
-    pass
+    raise NotImplementedError
 
   def cost(self, state):
-    pass
+    raise NotImplementedError
 
   def neighbor(self, state):
-    pass
+    raise NotImplementedError
   
   def solve(self):
-    pass
+    raise NotImplementedError

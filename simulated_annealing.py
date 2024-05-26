@@ -17,9 +17,7 @@ class simulated_annealing:
         best_cost = current_cost
         for i in range(self.max_iter):
             next = self.problem.neighbor(current)
-            print(next)
             next_cost = self.problem.cost(next)
-            print(next_cost)
             delta = next_cost - current_cost
             if delta < 0 or random.random() < self.probability(current_cost, next_cost, t):
                 current = next
