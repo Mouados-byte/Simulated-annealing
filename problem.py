@@ -10,3 +10,6 @@ class Problem:
   
   def solve(self):
     raise NotImplementedError
+  
+  def animate(self, frame):
+    raise NotImplementedError

@@ -19,5 +19,6 @@ dists = [
 
 problem = TSP(cities, dists)
 best, best_cost = problem.solve()
+problem.animate()
 print(best, best_cost)
 

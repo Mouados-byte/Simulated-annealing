@@ -6,11 +6,14 @@ import math
 import random
 from problem import Problem
 from simulated_annealing import simulated_annealing
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 class TSP(Problem):
     def __init__(self, cities, dists):
         self.cities = cities
         self.dists = dists
+        self.sa = None
 
     def initial(self):
         return random.sample(self.cities, len(self.cities))
@@ -33,6 +36,22 @@ class TSP(Problem):
         return state
     
     def solve(self):
-      sa = simulated_annealing(self)
-      return sa.solve()
+      self.sa = simulated_annealing(self)
+      return self.sa.solve()
+    
+    def update(self, frame, ax):
+      ax.clear()
+      state = self.sa.states[frame]
+      x = [self.cities.index(city) for city in state]
+      y = [self.dists[self.cities.index(state[i])][self.cities.index(state[(i + 1) % len(state)])] for i in range(len(state))]
+      ax.plot(x, y, 'bo-')
+      ax.set_title(f'Iteration {frame}, Cost: {self.sa.progress[frame]}')
+      ax.set_xlabel('City Index')
+      ax.set_ylabel('Distance')
+      plt.xticks(range(len(self.cities)), self.cities, rotation=90)
+      
+    def animate(self):
+      fig, ax = plt.subplots()
+      ani = animation.FuncAnimation(fig, self.update, frames=len(self.sa.states), fargs=(ax,), repeat=False, interval=10)
+      plt.show()
       
