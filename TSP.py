@@ -58,3 +58,15 @@ class TSP(Problem):
         fig, ax = plt.subplots()
         ani = animation.FuncAnimation(fig, self.update, frames=len(self.sa.states), fargs=(ax,), repeat=False, interval=10)
         plt.show()
+        
+    def show_final_graph(self):
+        # Afficher le graphique final du meilleur chemin trouvé
+        best = self.sa.states[-1]
+        x = [self.cities.index(city) for city in best]
+        y = [self.dists[self.cities.index(best[i])][self.cities.index(best[(i + 1) % len(best)])] for i in range(len(best))]
+        plt.plot(x, y, 'bo-')
+        plt.title(f'Final Solution, Cost: {self.sa.progress[-1]}')
+        plt.xlabel('City Index')
+        plt.ylabel('Distance')
+        plt.xticks(range(len(self.cities)), self.cities, rotation=90)
+        plt.show()
